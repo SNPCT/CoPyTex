@@ -23,7 +23,11 @@ const options = {
   logLevel: 'info',
 };
 
-copyStatic();
+copyStatic() {
+  copyFileSync('index.html', 'docs/index.html');
+  copyFileSync('src/style.css', 'docs/style.css');
+  copyFileSync('favicon.png', 'docs/favicon.png');
+};
 if (watch) {
   const { watch: fsWatch } = await import('node:fs');
   ['index.html', 'src/style.css'].forEach((f) => fsWatch(f, copyStatic));
