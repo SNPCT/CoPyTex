@@ -1,0 +1,4 @@
+# Crowdin 설정: 기준 언어는 한국어(ko.json), 번역 결과는 locales/<언어코드>.json 으로 저장돼요.
+files:
+  - source: /locales/ko.json
+    translation: /locales/%two_letters_code%.json

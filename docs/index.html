@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoPyTex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<!-- MathJax 설정: 패키지 목록은 저장된 설정에서 읽어요 (설정 > 패키지). 바꾸면 새로고침이 필요해요. -->
+<script>
+(function () {
+  var packages = ['mhchem', 'physics', 'mathtools', 'cancel', 'boldsymbol', 'braket'];
+  try {
+    var s = JSON.parse(localStorage.getItem('copytex:settings') || localStorage.getItem('ltxpng:settings') || 'null');
+    if (s && Array.isArray(s.packages)) packages = s.packages;
+  } catch (e) {}
+  window.MathJax = {
+    startup: { typeset: false },
+    svg: { fontCache: 'local' },
+    loader: { load: packages.map(function (p) { return '[tex]/' + p; }) },
+    tex: { inlineMath: [], displayMath: [], packages: { '[+]': packages, '[-]': ['noundefined'] } }
+  };
+  window.__mjReady = new Promise(function (resolve, reject) {
+    var sc = document.createElement('script');
+    sc.src = window.MATHJAX_SRC || 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js';
+    sc.onload = function () { MathJax.startup.promise.then(resolve, reject); };
+    sc.onerror = function () { reject(new Error('MathJax load failed')); };
+    document.head.appendChild(sc);
+  });
+})();
+</script>
+</head>
+<body>
+<div id="app" class="wrap"></div>
+<script src="app.js"></script>
+</body>
+</html>
